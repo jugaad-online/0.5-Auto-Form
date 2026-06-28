@@ -8,7 +8,10 @@ A lightweight, fully client-side portal of **fillable government social-security
 
 ## Open the app
 
-- **[Open the portal &rarr; `index.html`](index.html)**
+- **Live site: [https://jugaad-online.github.io/0.5-Auto-Form/](https://jugaad-online.github.io/0.5-Auto-Form/)**
+- Or open locally: **[`index.html`](index.html)**
+
+### Run locally
 
 Two ways to launch:
 
