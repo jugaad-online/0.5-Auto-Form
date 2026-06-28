@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atal Pension Yojana (APY) — Subscriber Registration Form</title>
+  <style>
+:root {
+  --apy-green: #1d742f;
+  --apy-green-dark: #145322;
+  --apy-saffron: #d9711a;
+  --bar: #d9d9d9;
+  --bar-line: #000;
+  --ink: #111;
+  --muted: #555;
+  --bg: #e9ece9;
+  --paper: #ffffff;
+  --focus: #2f9e44;
+  --cell: #000;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, "Segoe UI", Helvetica, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* ===== Toolbar ===== */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--apy-green);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+.toolbar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+}
+.brand { font-weight: 700; letter-spacing: 0.5px; }
+.toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  font: inherit; cursor: pointer; border: none; border-radius: 6px;
+  padding: 7px 14px; font-size: 13px; font-weight: 600;
+  transition: background 0.15s, transform 0.05s;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--apy-saffron); color: #fff; }
+.btn-primary:hover { background: #bd5f12; }
+.btn-ghost { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+.btn-ghost:hover { background: rgba(255,255,255,0.24); }
+
+/* ===== Page / document ===== */
+.page {
+  width: 210mm;
+  margin: 20px auto;
+  background: var(--paper);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  padding: 8mm;
+}
+.apy-doc {
+  border: 2px dashed #000;
+  padding: 8px 12px 10px;
+}
+
+/* ===== Hindi strips ===== */
+.hindi-strip {
+  text-align: center;
+  font-weight: 700;
+  font-size: 13px;
+  margin: 2px 0 8px;
+}
+.hindi-strip.bottom { margin: 12px 0 2px; border-top: 1px dashed #000; padding-top: 8px; }
+
+/* ===== Header ===== */
+.apy-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid #000;
+  margin-bottom: 10px;
+}
+.apy-logo {
+  background: var(--apy-green);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.05;
+  font-style: italic;
+  min-width: 92px;
+}
+.apy-logo.has-logo { background: #fff; padding: 4px 8px; }
+.apy-logo.logo-empty { background: transparent; min-width: 0; padding: 0; }
+.apy-logo-text { display: flex; flex-direction: column; align-items: center; }
+.bank-logo-img {
+  max-width: 150px;
+  max-height: 58px;
+  object-fit: contain;
+  display: block;
+}
+.bank-logo-img[hidden] { display: none !important; }
+.apy-title {
+  background: var(--bar);
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  padding: 6px;
+}
+.apy-emblem {
+  background: var(--bar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+}
+.apy-emblem img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===== Addressed-to / intro ===== */
+.addressed-to { display: flex; gap: 8px; align-items: baseline; margin: 4px 0; }
+.addr-line { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; flex: 1; }
+.line-input {
+  border: none; border-bottom: 1px solid #000; border-radius: 0;
+  background: transparent; padding: 1px 4px; font: inherit; font-size: 13px;
+  flex: 1; min-width: 120px;
+}
+.line-input:focus { outline: none; border-bottom-color: var(--focus); }
+.intro-line { margin: 2px 0; font-size: 12.5px; }
+.mandatory-line { margin: 6px 0 4px; font-size: 12.5px; }
+
+/* ===== Section bars ===== */
+.sec-bar {
+  background: var(--bar);
+  border: 1px solid #000;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 3px 8px;
+  margin-top: 6px;
+}
+.grid-block {
+  border: 1px solid #000;
+  border-top: none;
+  padding: 7px 10px 9px;
+}
+
+/* ===== Form rows ===== */
+.frow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 5px 0;
+}
+.flabel { font-size: 12.5px; white-space: nowrap; }
+.flabel.wide { min-width: 0; }
+.flabel.rl { margin-left: 10px; }
+.flabel sup { color: #000; }
+
+.cell-input {
+  font: inherit;
+  font-size: 13px;
+  padding: 3px 6px;
+  border: 1px solid var(--cell);
+  background: #fff;
+  color: var(--ink);
+  min-width: 90px;
+  height: 24px;
+}
+.cell-input:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 2px rgba(47,158,68,0.18);
+}
+select.cell-input {
+  height: 24px;
+  padding: 2px 6px;
+  background: #fff;
+  cursor: pointer;
+}
+.cell-input.grow { flex: 1; min-width: 120px; }
+.cell-input.dob { width: 140px; min-width: 140px; flex: none; }
+.cell-input.age { width: 64px; min-width: 64px; flex: none; }
+.cell-input.sm { width: 110px; min-width: 110px; flex: none; }
+.upper { text-transform: uppercase; }
+.readonly { background: #eef2ee; font-weight: 700; }
+
+/* Mandatory-field validation highlight */
+.cell-input.invalid, .line-input.invalid {
+  border: 1.5px solid #d23b3b !important;
+  background: #fdeded;
+  box-shadow: 0 0 0 2px rgba(210, 59, 59, 0.15);
+}
+.frow.invalid .tickbox { border-color: #d23b3b; box-shadow: 0 0 0 2px rgba(210, 59, 59, 0.18); }
+.frow.invalid .ticklbl { color: #c0212c; font-weight: 700; }
+
+/* Tick boxes (radio) styled as the original square boxes */
+.ticklbl { font-size: 12.5px; }
+.tickbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 18px;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: pointer;
+}
+.tickbox input { margin: 0; accent-color: var(--apy-green); }
+.note-inline { font-size: 11.5px; font-style: italic; color: #333; margin-left: 6px; }
+.chk-inline { font-size: 11.5px; display: inline-flex; align-items: center; gap: 5px; margin-left: 10px; }
+.chk-inline input { accent-color: var(--apy-green); }
+
+.sub-head { font-size: 12.5px; font-weight: 700; margin: 8px 0 2px; }
+.minor-fields.disabled { opacity: 0.45; pointer-events: none; }
+
+/* ===== Pension details ===== */
+.pension-row { margin-bottom: 6px; }
+.pension-split { display: grid; grid-template-columns: 1fr 1.25fr; gap: 0; border: 1px solid #000; }
+.pension-left { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-right: 1px solid #000; }
+.pl-label { font-size: 11.5px; line-height: 1.25; }
+.pl-label em { font-size: 10.5px; color: #444; }
+.pension-left .cell-input { width: 90px; min-width: 90px; }
+.pension-right { padding: 6px 8px; font-size: 10.5px; text-align: justify; line-height: 1.3; }
+.auto-note { font-size: 11.5px; color: var(--muted); font-style: italic; margin: 6px 0 0; }
+.auto-note:empty { margin: 0; }
+.auto-note.warn { color: #c0212c; font-weight: 700; font-style: normal; }
+
+/* ===== Declaration ===== */
+.declaration { margin: 10px 0; }
+.declaration h3 { font-size: 13px; font-weight: 800; margin: 6px 0 4px; }
+.declaration p { font-size: 10.5px; text-align: justify; line-height: 1.3; margin: 0 0 8px; }
+.sign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: end; margin-top: 8px; }
+.sign-left .frow { margin: 4px 0; }
+.sign-right { text-align: center; align-self: end; }
+.sign-line { border-top: 1px solid #000; margin: 28px 12px 4px; }
+.sign-cap { font-size: 12px; font-weight: 700; }
+.sign-foot { font-size: 10.5px; color: #333; }
+
+/* ===== Acknowledgement ===== */
+.ack { border: 1px solid #000; margin-top: 10px; padding: 0 0 6px; }
+.ack-title { text-align: center; font-weight: 800; font-size: 12.5px; border-bottom: 1px solid #000; padding: 4px 6px; }
+.ack-sub { text-align: center; font-size: 11px; font-style: italic; padding: 2px 0 6px; }
+.ack-row { padding: 0 10px; margin: 6px 0; }
+.ack-monthly { font-weight: 800; font-size: 12.5px; margin-left: 10px; }
+.ack-bank { display: grid; grid-template-columns: 1.4fr 1fr; border-top: 1px solid #000; margin-top: 6px; }
+.ack-bank-left { border-right: 1px solid #000; padding: 6px 0; }
+.ack-bank-right { display: flex; align-items: flex-end; justify-content: center; text-align: center; padding: 10px; font-size: 12px; font-weight: 600; }
+
+/* ===== Screen-only chart helper ===== */
+.helper {
+  width: 210mm;
+  margin: 0 auto 28px;
+  background: var(--paper);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+  padding: 14px 18px 18px;
+}
+.chart-title { color: var(--apy-green); font-size: 14px; margin: 4px 0 10px; }
+.apy-chart { width: 100%; border-collapse: collapse; font-size: 12px; }
+.apy-chart th, .apy-chart td { border: 1px solid #cdd8cf; padding: 5px 6px; text-align: center; }
+.apy-chart thead th { background: var(--apy-green); color: #fff; font-weight: 600; }
+.apy-chart tbody tr:nth-child(even) { background: #f4f8f4; }
+.apy-chart tbody tr.match { background: #fff3e0 !important; font-weight: 700; outline: 2px solid var(--apy-saffron); }
+.chart-foot { font-size: 11px; color: var(--muted); margin: 8px 0 0; }
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--apy-green-dark); color: #fff;
+  padding: 11px 20px; border-radius: 8px; font-size: 13px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s; z-index: 100;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== Floating Validate button ===== */
+.fab {
+  position: fixed; right: 22px; bottom: 22px; z-index: 90;
+  display: inline-flex; align-items: center; gap: 8px;
+  border: none; border-radius: 30px; padding: 13px 20px;
+  background: linear-gradient(135deg, var(--apy-green), var(--apy-green-dark));
+  color: #fff; font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.fab:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4); }
+.fab:active { transform: translateY(0); }
+.fab .fab-ic { font-size: 16px; line-height: 1; }
+@media (max-width: 480px) {
+  .fab { padding: 15px; border-radius: 50%; }
+  .fab .fab-tx { display: none; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 840px) {
+  .page, .helper { width: 100%; margin: 12px 0; box-shadow: none; padding: 10px; }
+  .apy-head { grid-template-columns: auto 1fr; }
+  .apy-emblem { display: none; }
+  .apy-title { font-size: 13px; }
+  .pension-split, .sign-grid, .ack-bank { grid-template-columns: 1fr; }
+  .pension-left { border-right: none; border-bottom: 1px solid #000; }
+  .ack-bank-left { border-right: none; border-bottom: 1px solid #000; }
+  .cell-input.grow { min-width: 100px; }
+}
+
+/* ===== Compact layout — shared by Print and on-screen Preview ===== */
+body.compact { font-size: 10px; line-height: 1.18; }
+body.compact .apy-doc { padding: 4px 8px 4px; }
+
+/* Hindi strips + header */
+body.compact .hindi-strip { font-size: 10.5px; margin: 0 0 2px; }
+body.compact .hindi-strip.bottom { margin: 3px 0 0; padding-top: 3px; }
+body.compact .apy-head { margin-bottom: 4px; }
+body.compact .apy-logo { font-size: 13px; }
+body.compact .apy-title { font-size: 14px; padding: 4px; }
+body.compact .apy-emblem img { width: 40px; height: 40px; }
+
+/* Address / intro */
+body.compact .addressed-to { margin: 2px 0; }
+body.compact .intro-line { font-size: 10px; margin: 1px 0; }
+body.compact .mandatory-line { font-size: 10px; margin: 3px 0 2px; }
+
+/* Sections & rows */
+body.compact .sec-bar { font-size: 11px; padding: 1px 8px; margin-top: 2px; }
+body.compact .grid-block { padding: 3px 8px 3px; }
+body.compact .frow { margin: 2px 0; gap: 6px; }
+body.compact .flabel, body.compact .ticklbl { font-size: 10.5px; }
+body.compact .cell-input { height: 17px; font-size: 10.5px; padding: 0 5px; }
+body.compact select.cell-input { height: 17px; }
+body.compact .cell-input.dob { width: 128px; min-width: 128px; }
+body.compact .tickbox { width: 16px; height: 14px; }
+body.compact .sub-head { font-size: 10.5px; margin: 3px 0 1px; }
+body.compact .note-inline, body.compact .chk-inline { font-size: 10px; }
+
+/* Pension */
+body.compact .pension-row { margin-bottom: 3px; }
+body.compact .pension-left { padding: 3px 6px; }
+body.compact .pl-label { font-size: 10px; }
+body.compact .pension-right { font-size: 9px; line-height: 1.18; padding: 3px 6px; }
+
+/* Declaration */
+body.compact .declaration { margin: 4px 0; }
+body.compact .declaration h3 { font-size: 11px; margin: 3px 0 1px; }
+body.compact .declaration p { font-size: 9px; line-height: 1.15; margin: 0 0 3px; }
+body.compact .sign-grid { margin-top: 3px; }
+body.compact .sign-line { margin: 10px 12px 2px; }
+body.compact .sign-cap { font-size: 10.5px; }
+body.compact .sign-foot { font-size: 9px; }
+
+/* Acknowledgement */
+body.compact .ack { margin-top: 4px; }
+body.compact .ack-title { font-size: 11px; padding: 2px 6px; }
+body.compact .ack-sub { font-size: 9.5px; padding: 1px 0 3px; }
+body.compact .ack-row { margin: 2px 0; }
+body.compact .ack-bank-left { padding: 3px 0; }
+body.compact .ack-bank-right { padding: 4px; font-size: 10.5px; }
+
+/* ===== On-screen Preview (A4 framing) ===== */
+body.preview-mode { background: #3a3f44; }
+body.preview-mode .helper { display: none !important; }
+body.preview-mode .page {
+  width: 210mm;
+  height: 297mm;
+  padding: 7mm;
+  margin: 84px auto 48px;
+  background: #fff;
+  box-shadow: 0 0 0 1px #888, 0 10px 40px rgba(0, 0, 0, 0.55);
+  overflow: visible;
+  position: relative;
+}
+body.preview-mode .page::after {
+  content: "▲ A4 page-1 boundary — anything below prints on page 2";
+  position: absolute;
+  left: 0; right: 0; top: 290mm;
+  border-top: 2px dashed #c0212c;
+  font-size: 10px; color: #c0212c; font-weight: 700;
+  padding-top: 2px; text-align: center;
+}
+
+/* Preview fit-status banner */
+.preview-banner {
+  position: fixed; top: 64px; left: 50%; transform: translateX(-50%);
+  z-index: 60; padding: 8px 16px; border-radius: 8px;
+  font-size: 13px; font-weight: 700; color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.preview-banner.fit { background: var(--apy-green); }
+.preview-banner.over { background: #c0212c; }
+
+/* ===== Print (A4) — uses body.compact (added by JS on print) ===== */
+@media print {
+  @page { size: A4 portrait; margin: 7mm; }
+  html, body { background: #fff; }
+  .no-print { display: none !important; }
+  .page { width: auto; height: auto; margin: 0; padding: 0; box-shadow: none; }
+  .page::after { display: none !important; }
+  .cell-input:focus { box-shadow: none !important; }
+  .readonly { background: #fff !important; }
+  .sec-bar, .apy-title, .apy-emblem, .apy-logo {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .apy-doc, .apy-head, .grid-block, .pension-split, .declaration, .ack {
+    page-break-inside: avoid;
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- ===== Toolbar (hidden on print) ===== -->
+  <div class="toolbar no-print">
+    <div class="toolbar-inner">
+      <span class="brand">APY · Subscriber Registration</span>
+      <div class="toolbar-actions">
+        <a class="btn btn-ghost" href="index.html">&larr; Portal</a>
+        <button type="button" id="btnSample" class="btn btn-ghost">Fill Sample</button>
+        <button type="button" id="btnSave" class="btn btn-ghost">Save</button>
+        <button type="button" id="btnLoad" class="btn btn-ghost">Load Saved</button>
+        <button type="button" id="btnClear" class="btn btn-ghost">Clear</button>
+        <button type="button" id="btnExport" class="btn btn-ghost">Export CSV</button>
+        <label for="importFile" class="btn btn-ghost">Import CSV</label>
+        <input type="file" id="importFile" accept=".csv,text/csv" hidden />
+        <label for="bankLogoFile" class="btn btn-ghost">Bank Logo</label>
+        <input type="file" id="bankLogoFile" accept="image/*" hidden />
+        <button type="button" id="btnRemoveLogo" class="btn btn-ghost" hidden>Remove Logo</button>
+        <button type="button" id="btnPreview" class="btn btn-ghost">Preview</button>
+        <button type="button" id="btnPrint" class="btn btn-primary">Print / PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <form id="apyForm" autocomplete="on">
+    <section class="page">
+      <div class="apy-doc">
+        <!-- Top Hindi strip -->
+        <p class="hindi-strip top">ये है आपके भविष्य की सुरक्षा के लिए ज़रूरी</p>
+
+        <!-- Header banner -->
+        <header class="apy-head">
+          <div class="apy-logo" id="apyLogo">
+            <img id="bankLogoImg" class="bank-logo-img" alt="Bank Logo" hidden />
+            <div class="apy-logo-text" id="apyLogoText"><span>Atal</span><span>Pension</span><span>Yojana</span></div>
+          </div>
+          <div class="apy-title">ATAL PENSION YOJANA (APY) -<br />SUBSCRIBER REGISTRATION FORM</div>
+          <div class="apy-emblem"><img src="APY_LOGO.png" alt="Pradhan Mantri Jan-Dhan Yojana" onerror="this.style.display='none'" /></div>
+        </header>
+
+        <!-- Addressed to -->
+        <div class="addressed-to">
+          <span>To,</span>
+          <div class="addr-line">
+            <span>The Branch Manager,</span>
+            <input type="text" id="toBankName" name="toBankName" class="line-input" />
+            <span>Bank</span>
+            <input type="text" id="toBranch" name="toBranch" class="line-input" />
+            <span>Branch</span>
+          </div>
+        </div>
+        <p class="intro-line">Dear Sir/Madam,</p>
+        <p class="intro-line">I hereby request that an APY account be opened in my name under National Pension System (NPS) as per the particulars given below:</p>
+        <p class="mandatory-line"><strong>* Indicates mandatory fields. Please fill the form in English and BLOCK letters</strong></p>
+
+        <!-- ===== 1. BANK DETAILS ===== -->
+        <div class="sec-bar">1.&nbsp;&nbsp;BANK DETAILS:</div>
+        <div class="grid-block">
+          <div class="frow">
+            <label class="flabel">Bank A/c Number<sup>*</sup></label>
+            <input type="text" id="bankAccNo" name="bankAccNo" class="cell-input grow" inputmode="numeric" />
+          </div>
+          <div class="frow">
+            <label class="flabel">Bank Name<sup>*</sup></label>
+            <input type="text" id="bankName" name="bankName" class="cell-input grow upper" />
+            <label class="flabel rl">Bank Branch<sup>*</sup></label>
+            <input type="text" id="bankBranch" name="bankBranch" class="cell-input grow upper" />
+          </div>
+        </div>
+
+        <!-- ===== 2. PERSONAL DETAILS ===== -->
+        <div class="sec-bar">2.&nbsp;&nbsp;PERSONAL DETAILS:</div>
+        <div class="grid-block">
+          <div class="frow">
+            <label class="flabel">Name of Applicant</label>
+            <span class="ticklbl">Shri</span>
+            <label class="tickbox"><input type="radio" name="title" value="Shri" /></label>
+            <span class="ticklbl">Smt.</span>
+            <label class="tickbox"><input type="radio" name="title" value="Smt" /></label>
+            <span class="ticklbl">Kumari</span>
+            <label class="tickbox"><input type="radio" name="title" value="Kumari" /></label>
+          </div>
+          <div class="frow">
+            <label class="flabel">Full Name</label>
+            <input type="text" id="fullName" name="fullName" class="cell-input grow upper" />
+          </div>
+          <div class="frow">
+            <label class="flabel">Date of Birth<sup>*</sup></label>
+            <input type="date" id="dob" name="dob" class="cell-input dob" />
+            <label class="flabel rl">Age</label>
+            <input type="text" id="age" name="age" class="cell-input age readonly" readonly />
+            <label class="flabel rl">Mobile No</label>
+            <input type="tel" id="mobile" name="mobile" class="cell-input grow" maxlength="10" inputmode="numeric" />
+          </div>
+          <div class="frow">
+            <label class="flabel">Email ID</label>
+            <input type="email" id="email" name="email" class="cell-input grow" />
+            <label class="flabel rl">Aadhaar</label>
+            <input type="text" id="aadhaar" name="aadhaar" class="cell-input grow" maxlength="14" inputmode="numeric" />
+          </div>
+          <div class="frow">
+            <label class="flabel">Married</label>
+            <span class="ticklbl">Yes</span>
+            <label class="tickbox"><input type="radio" name="married" value="Yes" /></label>
+            <span class="ticklbl">No</span>
+            <label class="tickbox"><input type="radio" name="married" value="No" /></label>
+            <span class="note-inline">If married, spouse name is mandatory</span>
+          </div>
+          <div class="frow">
+            <label class="flabel">Name of Spouse</label>
+            <input type="text" id="spouseName" name="spouseName" class="cell-input grow upper" />
+            <label class="flabel rl">Aadhaar</label>
+            <input type="text" id="spouseAadhaar" name="spouseAadhaar" class="cell-input grow" maxlength="14" inputmode="numeric" />
+          </div>
+          <div class="frow">
+            <label class="flabel">Nominee's Name<sup>*</sup></label>
+            <input type="text" id="nomineeName" name="nomineeName" class="cell-input grow upper" />
+            <label class="flabel rl">Aadhaar</label>
+            <input type="text" id="nomineeAadhaar" name="nomineeAadhaar" class="cell-input grow" maxlength="14" inputmode="numeric" />
+          </div>
+          <div class="frow">
+            <label class="flabel wide">Nominee's relationship with the subscriber <span class="req">*</span></label>
+            <select id="nomineeRelation" name="nomineeRelation" class="cell-input grow">
+              <option value="">-- Select --</option>
+              <option>Spouse</option>
+              <option>Husband</option>
+              <option>Wife</option>
+              <option>Son</option>
+              <option>Daughter</option>
+              <option>Father</option>
+              <option>Mother</option>
+              <option>Brother</option>
+              <option>Sister</option>
+              <option>Grandfather</option>
+              <option>Grandmother</option>
+              <option>Grandson</option>
+              <option>Granddaughter</option>
+              <option>Son-in-law</option>
+              <option>Daughter-in-law</option>
+              <option>Father-in-law</option>
+              <option>Mother-in-law</option>
+              <option>Nephew</option>
+              <option>Niece</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <p class="sub-head">Additional Details in case nominee is a Minor
+            <label class="chk-inline"><input type="checkbox" id="nomineeMinor" name="nomineeMinor" /> Nominee is a Minor</label>
+          </p>
+          <div id="minorFields" class="minor-fields">
+            <div class="frow">
+              <label class="flabel">Date of Birth<sup>*</sup></label>
+              <input type="date" id="nomineeDob" name="nomineeDob" class="cell-input dob" />
+            </div>
+            <div class="frow">
+              <label class="flabel">Guardian's Name<sup>*</sup></label>
+              <input type="text" id="guardianName" name="guardianName" class="cell-input grow upper" />
+            </div>
+          </div>
+
+          <div class="frow">
+            <label class="flabel wide">Whether beneficiary of other statutory social security schemes</label>
+            <span class="ticklbl">Yes</span>
+            <label class="tickbox"><input type="radio" name="otherSocialScheme" value="Yes" /></label>
+            <span class="ticklbl">No</span>
+            <label class="tickbox"><input type="radio" name="otherSocialScheme" value="No" /></label>
+          </div>
+          <div class="frow">
+            <label class="flabel wide">Whether Income Tax Payer</label>
+            <span class="ticklbl">Yes</span>
+            <label class="tickbox"><input type="radio" name="incomeTaxPayer" value="Yes" /></label>
+            <span class="ticklbl">No</span>
+            <label class="tickbox"><input type="radio" name="incomeTaxPayer" value="No" /></label>
+          </div>
+          <div class="frow">
+            <label class="flabel wide">Is FATCA/CRS applicable</label>
+            <span class="ticklbl">Yes</span>
+            <label class="tickbox"><input type="radio" name="fatcaCrs" value="Yes" /></label>
+            <span class="ticklbl">No</span>
+            <label class="tickbox"><input type="radio" name="fatcaCrs" value="No" /></label>
+            <span class="note-inline">Applicable for US persons / tax residents outside India</span>
+          </div>
+        </div>
+
+        <!-- ===== 3. PENSION DETAILS ===== -->
+        <div class="sec-bar">3.&nbsp;&nbsp;PENSION DETAILS</div>
+        <div class="grid-block">
+          <div class="frow pension-row">
+            <label class="flabel wide">Pension Amount (Please tick(&#10003;))<sup>*</sup></label>
+            <span class="ticklbl">1000</span>
+            <label class="tickbox"><input type="radio" name="pensionAmount" value="1000" /></label>
+            <span class="ticklbl">2000</span>
+            <label class="tickbox"><input type="radio" name="pensionAmount" value="2000" /></label>
+            <span class="ticklbl">3000</span>
+            <label class="tickbox"><input type="radio" name="pensionAmount" value="3000" /></label>
+            <span class="ticklbl">4000</span>
+            <label class="tickbox"><input type="radio" name="pensionAmount" value="4000" /></label>
+            <span class="ticklbl">5000</span>
+            <label class="tickbox"><input type="radio" name="pensionAmount" value="5000" /></label>
+          </div>
+          <div class="frow pension-row">
+            <label class="flabel wide">Frequency of Contribution (Please tick(&#10003;))<sup>*</sup></label>
+            <span class="ticklbl">Monthly</span>
+            <label class="tickbox"><input type="radio" name="frequency" value="Monthly" /></label>
+            <span class="ticklbl">Quarterly</span>
+            <label class="tickbox"><input type="radio" name="frequency" value="Quarterly" /></label>
+            <span class="ticklbl">Half Yearly</span>
+            <label class="tickbox"><input type="radio" name="frequency" value="Half Yearly" /></label>
+          </div>
+          <div class="pension-split">
+            <div class="pension-left">
+              <div class="pl-label">Contribution Amount (Monthly)<br />(in Rs.)<br /><em>(To be filled by the Bank)</em></div>
+              <input type="text" id="contribution" name="contribution" class="cell-input readonly" readonly />
+            </div>
+            <div class="pension-right">
+              I hereby authorize the bank to debit my above mentioned bank account till the age of 60 for making
+              payment under APY as applicable based on my age and the Pension Amount selected by me. If the transaction
+              is delayed or not effected at all for insufficient balance, I would not hold the bank responsible. I also
+              undertake to deposit the additional amount together with penalty thereon.
+            </div>
+          </div>
+          <p class="auto-note no-print" id="autoNote"></p>
+        </div>
+
+        <!-- ===== Declaration ===== -->
+        <div class="declaration">
+          <h3>Declaration &amp; Authorization by all subscribers</h3>
+          <p>
+            I meet the prescribed eligibility criteria for assistance under APY and I have read and understood the terms
+            and conditions of the Scheme. I hereby agree to the same and declare that the information furnished by me is
+            true and correct, to the best of my knowledge and belief. I undertake to immediately inform the bank of any
+            change in the above information furnished by me. Further, I do not hold any pre-existing account under NPS. I
+            understand that I shall be fully liable for submission of any false or incorrect information or documents. I
+            have read/been explained and have understood the APY guidelines. I further agree to be bound by the terms and
+            conditions of provision of services under the scheme as approved by PFRDA/Govt. of India.
+          </p>
+          <div class="sign-grid">
+            <div class="sign-left">
+              <div class="frow">
+                <label class="flabel">Date</label>
+                <input type="date" id="declDate" name="declDate" class="cell-input dob" />
+              </div>
+              <div class="frow">
+                <label class="flabel">Place</label>
+                <input type="text" id="declPlace" name="declPlace" class="cell-input grow" />
+              </div>
+            </div>
+            <div class="sign-right">
+              <div class="sign-line"></div>
+              <div class="sign-cap">Signature/Thumb Impression* of Subscriber</div>
+              <div class="sign-foot">(* LTI in case of male and RTI in case of female)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== Acknowledgement ===== -->
+        <div class="ack">
+          <div class="ack-title">ACKNOWLEDGEMENT - SUBSCRIBER REGISTRATION FOR ATAL PENSION YOJANA (APY)</div>
+          <div class="ack-sub">(To be filled by the Bank)</div>
+
+          <div class="frow ack-row">
+            <label class="flabel">Name of the Subscriber:</label>
+            <input type="text" id="ackSubscriberName" name="ackSubscriberName" class="cell-input grow upper" />
+          </div>
+          <div class="frow ack-row">
+            <label class="flabel">PRAN Number</label>
+            <input type="text" id="pranNumber" name="pranNumber" class="cell-input grow" />
+          </div>
+          <div class="frow ack-row">
+            <label class="flabel wide">Guaranteed Pension Amount</label>
+            <input type="text" id="ackPensionAmount" name="ackPensionAmount" class="cell-input sm readonly" readonly />
+            <label class="flabel rl">Periodicity of Contribution</label>
+            <input type="text" id="periodicity" name="periodicity" class="cell-input sm readonly" value="Monthly" readonly />
+          </div>
+          <div class="frow ack-row">
+            <label class="flabel wide">Monthly Contribution Amount under APY (in Rs.)</label>
+            <input type="text" id="ackContribution" name="ackContribution" class="cell-input grow readonly" readonly />
+          </div>
+
+          <div class="ack-bank">
+            <div class="ack-bank-left">
+              <div class="frow ack-row"><label class="flabel">Name of the Bank:</label><input type="text" id="ackBankName" name="ackBankName" class="cell-input grow" /></div>
+              <div class="frow ack-row"><label class="flabel">Bank Branch:</label><input type="text" id="ackBankBranch" name="ackBankBranch" class="cell-input grow" /></div>
+              <div class="frow ack-row"><label class="flabel">Receiving Officer's Name:</label><input type="text" id="receivingOfficer" name="receivingOfficer" class="cell-input grow" /></div>
+              <div class="frow ack-row"><label class="flabel">Date of Receipt of Application:</label><input type="date" id="receiptDate" name="receiptDate" class="cell-input dob" /></div>
+            </div>
+            <div class="ack-bank-right">
+              <span>Stamp and Signature of the Bank</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Hindi strip -->
+        <p class="hindi-strip bottom">कृपया ये फ़ॉर्म भरें एवं अपनी नज़दीकी बैंक शाखा में या बैंक मित्र के पास जमा करवाएं</p>
+      </div>
+    </section>
+
+    <!-- ===== Screen-only helper: APY contribution chart ===== -->
+    <section class="helper no-print">
+      <h3 class="chart-title">APY Indicative Monthly Contribution Chart (Entry age 18–40) — reference only</h3>
+      <table class="apy-chart">
+        <thead>
+          <tr>
+            <th>Entry Age</th><th>₹1,000</th><th>₹2,000</th><th>₹3,000</th><th>₹4,000</th><th>₹5,000</th>
+          </tr>
+        </thead>
+        <tbody id="chartBody"></tbody>
+      </table>
+      <p class="chart-foot">Figures in ₹ per month (PFRDA indicative chart). The highlighted row matches the subscriber's entry age. This panel is not printed.</p>
+    </section>
+  </form>
+
+  <div id="previewBanner" class="preview-banner no-print" hidden></div>
+  <div id="toast" class="toast no-print" aria-live="polite"></div>
+
+  <script>
+/* Atal Pension Yojana (APY) — Subscriber Registration Form
+ * Form filling, autofill, auto-save (localStorage), import/export, print,
+ * DOB -> age, and auto monthly-contribution from the official APY chart. */
+(function () {
+  "use strict";
+
+  const STORAGE_KEY = "apy_srf_data_v1";
+  const LOGO_KEY = "apy_bank_logo_v1";
+  const form = document.getElementById("apyForm");
+  const toastEl = document.getElementById("toast");
+
+  const APY_CHART = {
+    18: [42, 84, 126, 168, 210],
+    19: [46, 92, 138, 183, 228],
+    20: [50, 100, 150, 198, 248],
+    21: [54, 108, 162, 215, 269],
+    22: [59, 117, 177, 234, 292],
+    23: [64, 127, 192, 254, 318],
+    24: [70, 139, 208, 277, 346],
+    25: [76, 151, 226, 301, 376],
+    26: [82, 164, 246, 327, 409],
+    27: [90, 178, 268, 356, 446],
+    28: [97, 194, 292, 388, 485],
+    29: [106, 212, 318, 423, 529],
+    30: [116, 231, 347, 462, 577],
+    31: [126, 252, 379, 504, 630],
+    32: [138, 276, 414, 551, 689],
+    33: [151, 302, 453, 602, 752],
+    34: [165, 330, 495, 659, 824],
+    35: [181, 362, 543, 722, 902],
+    36: [198, 396, 594, 792, 990],
+    37: [218, 436, 654, 870, 1087],
+    38: [240, 480, 720, 957, 1196],
+    39: [264, 528, 792, 1054, 1318],
+    40: [291, 582, 873, 1164, 1454],
+  };
+  const PENSION_SLABS = [1000, 2000, 3000, 4000, 5000];
+
+  /* ---------- Helpers ---------- */
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => toastEl.classList.remove("show"), 2200);
+  }
+
+  function collect() {
+    const data = {};
+    form.querySelectorAll("input, select, textarea").forEach((el) => {
+      if (!el.name) return;
+      if (el.type === "radio") {
+        if (el.checked) data[el.name] = el.value;
+        else if (!(el.name in data)) data[el.name] = data[el.name] || "";
+      } else if (el.type === "checkbox") {
+        data[el.name] = el.checked;
+      } else {
+        data[el.name] = el.value;
+      }
+    });
+    return data;
+  }
+
+  function apply(data) {
+    if (!data) return;
+    Object.keys(data).forEach((name) => {
+      const els = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
+      if (!els.length) return;
+      els.forEach((el) => {
+        if (el.type === "radio") {
+          el.checked = el.value === data[name];
+        } else if (el.type === "checkbox") {
+          el.checked = !!data[name];
+        } else {
+          el.value = data[name];
+        }
+      });
+    });
+    onMinorChange();
+    syncGroupsFill();
+    recalc();
+    if (typeof syncPeriodicity === "function") syncPeriodicity();
+  }
+
+  /* ---------- Auto-save ---------- */
+  let saveTimer;
+  function autoSave() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(collect()));
+      } catch (e) {}
+    }, 400);
+  }
+
+  function loadSaved(showMsg) {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        if (showMsg) toast("No saved data found.");
+        return false;
+      }
+      apply(JSON.parse(raw));
+      if (showMsg) toast("Saved data loaded.");
+      return true;
+    } catch (e) {
+      if (showMsg) toast("Could not load saved data.");
+      return false;
+    }
+  }
+
+  /* ---------- Age from DOB ---------- */
+  function computeAge(dobStr) {
+    if (!dobStr) return null;
+    const dob = new Date(dobStr);
+    if (isNaN(dob)) return null;
+    const now = new Date();
+    let age = now.getFullYear() - dob.getFullYear();
+    const m = now.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age--;
+    return age;
+  }
+
+  /* ---------- Dynamic recalculation (age + contribution) ---------- */
+  const ageEl = document.getElementById("age");
+  const contributionEl = document.getElementById("contribution");
+  const autoNoteEl = document.getElementById("autoNote");
+
+  function selectedPension() {
+    const el = form.querySelector('[name="pensionAmount"]:checked');
+    return el ? parseInt(el.value, 10) : null;
+  }
+
+  function recalc() {
+    const dob = document.getElementById("dob").value;
+    const age = computeAge(dob);
+    const pension = selectedPension();
+
+    ageEl.value = age == null ? "" : age + " yrs";
+
+    const ackPension = document.getElementById("ackPensionAmount");
+    if (ackPension) ackPension.value = pension ? pension.toLocaleString("en-IN") : "";
+
+    let note = "";
+    let contribution = "";
+
+    if (age != null && pension) {
+      if (age < 18 || age > 40) {
+        note = "Note: APY entry age must be between 18 and 40 years (current age " + age + ").";
+      } else {
+        const slabIdx = PENSION_SLABS.indexOf(pension);
+        const row = APY_CHART[age];
+        if (row && slabIdx > -1) contribution = String(row[slabIdx]);
+      }
+    }
+
+    contributionEl.value = contribution;
+    const ackContribution = document.getElementById("ackContribution");
+    if (ackContribution) ackContribution.value = contribution;
+
+    if (autoNoteEl) {
+      autoNoteEl.textContent = note;
+      autoNoteEl.classList.toggle("warn", !!note);
+    }
+
+    highlightChartRow(age);
+  }
+
+  /* ---------- Build & highlight reference chart ---------- */
+  function buildChart() {
+    const body = document.getElementById("chartBody");
+    if (!body) return;
+    let html = "";
+    Object.keys(APY_CHART).forEach((age) => {
+      const r = APY_CHART[age];
+      html += '<tr data-age="' + age + '"><td>' + age + "</td>" +
+        r.map((v) => "<td>" + v + "</td>").join("") + "</tr>";
+    });
+    body.innerHTML = html;
+  }
+
+  function highlightChartRow(age) {
+    document.querySelectorAll("#chartBody tr").forEach((tr) => {
+      tr.classList.toggle("match", String(age) === tr.getAttribute("data-age"));
+    });
+  }
+
+  /* ---------- Repeated-field sync (type once, fill everywhere) ---------- */
+  const SYNC_GROUPS = [
+    ["toBankName", "bankName", "ackBankName"],
+    ["toBranch", "bankBranch", "ackBankBranch"],
+    ["fullName", "ackSubscriberName"],
+  ];
+  let syncing = false;
+
+  function groupOf(id) {
+    return SYNC_GROUPS.find((g) => g.indexOf(id) > -1);
+  }
+
+  function propagateFrom(el) {
+    if (syncing) return;
+    const group = groupOf(el.id);
+    if (!group) return;
+    syncing = true;
+    group.forEach((id) => {
+      if (id === el.id) return;
+      const t = document.getElementById(id);
+      if (t && t.value !== el.value) t.value = el.value;
+    });
+    syncing = false;
+  }
+
+  function syncGroupsFill() {
+    SYNC_GROUPS.forEach((g) => {
+      let val = "";
+      for (let i = 0; i < g.length; i++) {
+        const el = document.getElementById(g[i]);
+        if (el && el.value) { val = el.value; break; }
+      }
+      if (!val) return;
+      g.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && !el.value) el.value = val;
+      });
+    });
+  }
+
+  /* ---------- Custom bank logo (left header) ---------- */
+  const logoBox = document.getElementById("apyLogo");
+  const logoImg = document.getElementById("bankLogoImg");
+  const logoText = document.getElementById("apyLogoText");
+  const btnRemoveLogo = document.getElementById("btnRemoveLogo");
+
+  function setBankLogo(dataUrl) {
+    if (dataUrl) {
+      logoImg.src = dataUrl;
+      logoImg.hidden = false;
+      logoText.hidden = true;
+      logoBox.classList.add("has-logo");
+      logoBox.classList.remove("logo-empty");
+      btnRemoveLogo.hidden = false;
+    } else {
+      logoImg.removeAttribute("src");
+      logoImg.hidden = true;
+      logoText.hidden = true;
+      logoBox.classList.remove("has-logo");
+      logoBox.classList.add("logo-empty");
+      btnRemoveLogo.hidden = true;
+    }
+  }
+
+  function loadBankLogo() {
+    let saved = null;
+    try {
+      saved = localStorage.getItem(LOGO_KEY);
+    } catch (e) {}
+    setBankLogo(saved || null);
+  }
+
+  function handleLogoFile(file) {
+    if (!file.type || file.type.indexOf("image/") !== 0) {
+      toast("Please choose an image file.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      setBankLogo(dataUrl);
+      try {
+        localStorage.setItem(LOGO_KEY, dataUrl);
+      } catch (e) {
+        toast("Logo shown, but too large to save in this browser.");
+        return;
+      }
+      toast("Bank logo added.");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---------- Minor-nominee toggle ---------- */
+  function onMinorChange() {
+    const minor = document.getElementById("nomineeMinor").checked;
+    document.getElementById("minorFields").classList.toggle("disabled", !minor);
+  }
+
+  /* ---------- Mandatory-field validation ---------- */
+  const REQUIRED = [
+    { name: "bankAccNo", label: "Bank A/c Number" },
+    { name: "bankName", label: "Bank Name" },
+    { name: "bankBranch", label: "Bank Branch" },
+    { name: "fullName", label: "Full Name of Applicant" },
+    { name: "dob", label: "Date of Birth" },
+    { name: "mobile", label: "Mobile No" },
+    { name: "nomineeName", label: "Nominee's Name" },
+    { name: "nomineeRelation", label: "Nominee's relationship with the subscriber" },
+    { name: "pensionAmount", label: "Pension Amount" },
+  ];
+
+  function fieldValue(name) {
+    const els = form.querySelectorAll('[name="' + CSS.escape(name) + '"]');
+    if (!els.length) return "";
+    const first = els[0];
+    if (first.type === "radio") {
+      const checked = form.querySelector('[name="' + CSS.escape(name) + '"]:checked');
+      return checked ? checked.value : "";
+    }
+    return (first.value || "").trim();
+  }
+
+  function markInvalid(name, bad) {
+    form.querySelectorAll('[name="' + CSS.escape(name) + '"]').forEach((el) => {
+      const target = el.type === "radio" ? el.closest(".frow") : el;
+      if (target) target.classList.toggle("invalid", bad);
+    });
+  }
+
+  function clearInvalidOnInput() {
+    form.querySelectorAll(".invalid").forEach((el) => el.classList.remove("invalid"));
+  }
+
+  function validateRequired() {
+    const rules = REQUIRED.slice();
+    if (fieldValue("married") === "Yes") {
+      rules.push({ name: "spouseName", label: "Name of Spouse (married)" });
+    }
+    if (document.getElementById("nomineeMinor").checked) {
+      rules.push({ name: "nomineeDob", label: "Nominee Date of Birth (minor)" });
+      rules.push({ name: "guardianName", label: "Guardian's Name (minor)" });
+    }
+
+    const missing = [];
+    rules.forEach((r) => {
+      const empty = !fieldValue(r.name);
+      markInvalid(r.name, empty);
+      if (empty) missing.push(r);
+    });
+    return missing;
+  }
+
+  /* ---------- Format / date validation ---------- */
+  const FORMAT_RULES = [
+    { name: "mobile", label: "Mobile No", test: (v) => /^[6-9]\d{9}$/.test(v), msg: "must be 10 digits starting 6\u20139" },
+    { name: "email", label: "Email", test: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), msg: "enter a valid email address" },
+    { name: "aadhaar", label: "Aadhaar", test: (v) => /^\d{12}$/.test(v.replace(/\s/g, "")), msg: "Aadhaar must be 12 digits" },
+    { name: "spouseAadhaar", label: "Spouse's Aadhaar", test: (v) => /^\d{12}$/.test(v.replace(/\s/g, "")), msg: "Aadhaar must be 12 digits" },
+    { name: "nomineeAadhaar", label: "Nominee's Aadhaar", test: (v) => /^\d{12}$/.test(v.replace(/\s/g, "")), msg: "Aadhaar must be 12 digits" },
+    { name: "bankAccNo", label: "Bank A/c Number", test: (v) => /^\d{9,18}$/.test(v), msg: "account number must be 9\u201318 digits" },
+  ];
+
+  function isFutureDate(str) {
+    const d = new Date(str);
+    if (isNaN(d.getTime())) return false;
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    return d > today;
+  }
+
+  function validateFormats() {
+    const issues = [];
+    FORMAT_RULES.forEach((r) => {
+      const v = fieldValue(r.name);
+      if (v && !r.test(v)) {
+        markInvalid(r.name, true);
+        issues.push({ name: r.name, label: r.label, msg: r.msg });
+      }
+    });
+    const dob = fieldValue("dob");
+    if (dob) {
+      if (isNaN(new Date(dob).getTime())) {
+        markInvalid("dob", true);
+        issues.push({ name: "dob", label: "Date of Birth", msg: "enter a valid date" });
+      } else if (isFutureDate(dob)) {
+        markInvalid("dob", true);
+        issues.push({ name: "dob", label: "Date of Birth", msg: "cannot be in the future" });
+      } else {
+        const age = computeAge(dob);
+        if (age != null && (age < 18 || age > 40)) {
+          markInvalid("dob", true);
+          issues.push({ name: "dob", label: "Date of Birth", msg: "APY entry age must be 18\u201340 (current " + age + ")" });
+        }
+      }
+    }
+    const ndob = fieldValue("nomineeDob");
+    if (ndob && isFutureDate(ndob)) {
+      markInvalid("nomineeDob", true);
+      issues.push({ name: "nomineeDob", label: "Nominee Date of Birth", msg: "cannot be in the future" });
+    }
+    return issues;
+  }
+
+  function runFullValidation() {
+    clearInvalidOnInput();
+    const missing = validateRequired().map((m) => ({ name: m.name, label: m.label, msg: "required" }));
+    return missing.concat(validateFormats());
+  }
+
+  function focusIssue(list) {
+    if (!list.length) return;
+    const first = form.querySelector('[name="' + CSS.escape(list[0].name) + '"]');
+    if (first && first.focus) {
+      first.scrollIntoView({ behavior: "smooth", block: "center" });
+      try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); }
+    }
+  }
+
+  /* ---------- Sample data ---------- */
+  const SAMPLE = {
+    toBankName: "State Bank of India",
+    toBranch: "Imphal Main",
+    bankAccNo: "30123456789",
+    bankName: "State Bank of India",
+    bankBranch: "Imphal Main",
+    title: "Shri",
+    fullName: "RAHUL KUMAR SHARMA",
+    dob: "1995-08-15",
+    mobile: "9876543210",
+    email: "rahul.sharma@example.com",
+    aadhaar: "1234 5678 9012",
+    married: "Yes",
+    spouseName: "ANITA SHARMA",
+    spouseAadhaar: "2345 6789 0123",
+    nomineeName: "ANITA SHARMA",
+    nomineeAadhaar: "2345 6789 0123",
+    nomineeRelation: "Spouse",
+    nomineeMinor: false,
+    otherSocialScheme: "No",
+    incomeTaxPayer: "No",
+    fatcaCrs: "No",
+    pensionAmount: "5000",
+    frequency: "Monthly",
+    declPlace: "Imphal",
+    declDate: new Date().toISOString().slice(0, 10),
+    ackBankName: "State Bank of India",
+    ackBankBranch: "Imphal Main",
+    periodicity: "Monthly",
+  };
+
+  /* ---------- Export / Import (CSV) ---------- */
+  function csvCell(value) {
+    const s = value == null ? "" : String(value);
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let inQuotes = false;
+    const s = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i];
+      if (inQuotes) {
+        if (c === '"') {
+          if (s[i + 1] === '"') { cell += '"'; i++; }
+          else inQuotes = false;
+        } else cell += c;
+      } else if (c === '"') {
+        inQuotes = true;
+      } else if (c === ",") {
+        row.push(cell); cell = "";
+      } else if (c === "\n") {
+        row.push(cell); cell = "";
+        rows.push(row); row = [];
+      } else cell += c;
+    }
+    if (cell.length || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function exportCSV() {
+    const data = collect();
+    const lines = ["Field,Value"];
+    Object.keys(data).forEach((name) => {
+      lines.push(csvCell(name) + "," + csvCell(data[name]));
+    });
+    const blob = new Blob(["\uFEFF" + lines.join("\r\n")], { type: "text/csv;charset=utf-8;" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "apy-srf-" + new Date().toISOString().slice(0, 10) + ".csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast("Exported CSV.");
+  }
+
+  function importCSV(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        let text = reader.result;
+        if (text.charCodeAt(0) === 0xfeff) text = text.slice(1);
+        const rows = parseCSV(text);
+        if (!rows.length) throw new Error("empty");
+        const data = {};
+        let start = 0;
+        const h0 = (rows[0][0] || "").trim().toLowerCase();
+        const h1 = (rows[0][1] || "").trim().toLowerCase();
+        if (h0 === "field" && h1 === "value") start = 1;
+        for (let i = start; i < rows.length; i++) {
+          const key = (rows[i][0] || "").trim();
+          if (!key) continue;
+          let val = rows[i][1] != null ? rows[i][1] : "";
+          if (val === "true") val = true;
+          else if (val === "false") val = false;
+          data[key] = val;
+        }
+        apply(data);
+        autoSave();
+        toast("Imported CSV.");
+      } catch (e) {
+        toast("Invalid CSV file.");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  /* ---------- Wire up events ---------- */
+  document.getElementById("btnSample").addEventListener("click", () => {
+    apply(SAMPLE);
+    autoSave();
+    toast("Sample data filled.");
+  });
+  document.getElementById("btnSave").addEventListener("click", () => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collect()));
+      toast("Form saved to this browser.");
+    } catch (e) {
+      toast("Save failed (storage blocked).");
+    }
+  });
+  document.getElementById("btnLoad").addEventListener("click", () => loadSaved(true));
+  document.getElementById("btnClear").addEventListener("click", () => {
+    if (confirm("Clear all fields? This cannot be undone.")) {
+      form.reset();
+      document.getElementById("periodicity").value = "Monthly";
+      localStorage.removeItem(STORAGE_KEY);
+      onMinorChange();
+      recalc();
+      toast("Form cleared.");
+    }
+  });
+  document.getElementById("btnExport").addEventListener("click", exportCSV);
+  document.getElementById("importFile").addEventListener("change", (e) => {
+    if (e.target.files[0]) importCSV(e.target.files[0]);
+    e.target.value = "";
+  });
+  document.getElementById("bankLogoFile").addEventListener("change", (e) => {
+    if (e.target.files[0]) handleLogoFile(e.target.files[0]);
+    e.target.value = "";
+  });
+  btnRemoveLogo.addEventListener("click", () => {
+    setBankLogo(null);
+    try { localStorage.removeItem(LOGO_KEY); } catch (e) {}
+    toast("Bank logo removed.");
+  });
+  document.getElementById("btnPrint").addEventListener("click", () => {
+    syncGroupsFill();
+    const issues = runFullValidation();
+    if (issues.length) {
+      focusIssue(issues);
+      toast(
+        issues.length + " issue" + (issues.length > 1 ? "s" : "") +
+        " \u2014 " + issues[0].label + ": " + issues[0].msg
+      );
+      return;
+    }
+    window.print();
+  });
+
+  function validateOnly() {
+    syncGroupsFill();
+    const issues = runFullValidation();
+    if (!issues.length) {
+      toast("\u2713 All entries look valid.");
+    } else {
+      focusIssue(issues);
+      toast(
+        "\u26A0 " + issues.length + " issue" + (issues.length > 1 ? "s" : "") +
+        " \u2014 fix highlighted fields. First: " + issues[0].label + ": " + issues[0].msg
+      );
+    }
+  }
+  (function addValidateFab() {
+    if (document.getElementById("fabValidate")) return;
+    const fab = document.createElement("button");
+    fab.type = "button";
+    fab.id = "fabValidate";
+    fab.className = "fab no-print";
+    fab.title = "Validate the details you entered";
+    fab.innerHTML = '<span class="fab-ic">\u2713</span><span class="fab-tx">Validate</span>';
+    fab.addEventListener("click", validateOnly);
+    document.body.appendChild(fab);
+  })();
+
+  /* ---------- Preview (on-screen A4 print preview) ---------- */
+  function measureFit() {
+    const MM = 3.7795275591;
+    const doc = document.querySelector(".apy-doc");
+    const docPx = doc ? doc.getBoundingClientRect().height : 0;
+    const availMM = 297 - 14;
+    const docMM = docPx / MM;
+    const overMM = docMM - availMM;
+    const banner = document.getElementById("previewBanner");
+    if (banner) {
+      banner.hidden = false;
+      if (overMM > 0.5) {
+        banner.className = "preview-banner no-print over";
+        banner.textContent =
+          "\u26A0 Overflows one A4 page by ~" + Math.ceil(overMM) +
+          " mm (content " + Math.round(docMM) + "mm / " + availMM + "mm available)";
+      } else {
+        banner.className = "preview-banner no-print fit";
+        banner.textContent =
+          "\u2713 Fits on one A4 page (content " + Math.round(docMM) +
+          "mm / " + availMM + "mm available)";
+      }
+    }
+  }
+
+  function setPreview(on) {
+    document.body.classList.toggle("preview-mode", on);
+    document.body.classList.toggle("compact", on);
+    const btn = document.getElementById("btnPreview");
+    if (btn) btn.textContent = on ? "Exit Preview" : "Preview";
+    if (on) {
+      requestAnimationFrame(() => measureFit());
+    } else {
+      const banner = document.getElementById("previewBanner");
+      if (banner) banner.hidden = true;
+    }
+  }
+  document.getElementById("btnPreview").addEventListener("click", () => {
+    setPreview(!document.body.classList.contains("preview-mode"));
+  });
+
+  document.getElementById("nomineeMinor").addEventListener("change", () => {
+    onMinorChange();
+    autoSave();
+  });
+
+  document.getElementById("dob").addEventListener("input", recalc);
+  form.querySelectorAll('[name="pensionAmount"]').forEach((el) =>
+    el.addEventListener("change", () => {
+      recalc();
+      autoSave();
+    })
+  );
+
+  function syncPeriodicity() {
+    const f = form.querySelector('[name="frequency"]:checked');
+    const p = document.getElementById("periodicity");
+    if (p) p.value = f ? f.value : "Monthly";
+  }
+  form.querySelectorAll('[name="frequency"]').forEach((el) =>
+    el.addEventListener("change", () => {
+      syncPeriodicity();
+      autoSave();
+    })
+  );
+  syncPeriodicity();
+
+  form.querySelectorAll(".upper").forEach((el) =>
+    el.addEventListener("input", () => (el.value = el.value.toUpperCase()))
+  );
+
+  ["mobile", "bankAccNo"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", () => (el.value = el.value.replace(/\D/g, "")));
+  });
+
+  SYNC_GROUPS.forEach((g) => {
+    g.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", () => propagateFrom(el));
+    });
+  });
+
+  form.addEventListener("input", autoSave);
+  form.addEventListener("change", autoSave);
+
+  form.addEventListener("input", clearInvalidOnInput);
+  form.addEventListener("change", clearInvalidOnInput);
+
+  window.addEventListener("beforeprint", function () {
+    document.body.classList.add("compact");
+  });
+  window.addEventListener("afterprint", function () {
+    if (!document.body.classList.contains("preview-mode")) {
+      document.body.classList.remove("compact");
+    }
+  });
+
+  /* ---------- Init ---------- */
+  buildChart();
+  loadBankLogo();
+  loadSaved(false);
+  onMinorChange();
+  recalc();
+})();
+  </script>
+</body>
+</html>

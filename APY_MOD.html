@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APY — Subscriber Details Modification Form</title>
+  <style>
+:root {
+  --navy: #0d3b66;
+  --navy-dark: #082a4d;
+  --line: #c7d0de;
+  --line-soft: #e2e7f0;
+  --bg: #eef1f6;
+  --ink: #1b2433;
+  --muted: #5a677f;
+  --invalid: #c0212c;
+  --green: #1d742f;
+  --shadow: 0 10px 40px rgba(13, 59, 102, 0.16);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  font-size: 13px;
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+  box-shadow: 0 2px 12px rgba(8, 42, 77, 0.3);
+}
+.tb-title { color: #fff; font-weight: 700; font-size: 14px; margin-left: 4px; }
+.tb-spacer { flex: 1; }
+.btn {
+  border: 1px solid transparent; border-radius: 8px; padding: 8px 14px;
+  font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none;
+  display: inline-flex; align-items: center; transition: background 0.15s, border-color 0.15s;
+}
+.btn-primary { background: #fff; color: var(--navy); }
+.btn-primary:hover { background: #eaf0fb; }
+.btn-ghost { background: rgba(255, 255, 255, 0.12); color: #fff; border-color: rgba(255, 255, 255, 0.3); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.22); }
+
+/* ---------- Page / document ---------- */
+.page { max-width: 820px; margin: 24px auto 60px; background: #fff; box-shadow: var(--shadow); }
+.doc { border: 2px solid var(--navy); padding: 18px 20px; }
+
+/* ---------- Header ---------- */
+.doc-head {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center;
+  border-bottom: 2px solid var(--navy); padding-bottom: 12px; margin-bottom: 12px;
+}
+.doc-head.simple { grid-template-columns: 1fr; text-align: center; }
+.form-no { font-weight: 800; font-size: 16px; color: var(--navy); }
+.rule-ref { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.head-center { text-align: center; }
+.head-center h1 { margin: 0; font-size: 15px; font-weight: 700; line-height: 1.25; }
+.head-center p { margin: 4px 0 0; font-size: 11px; color: var(--muted); line-height: 1.3; }
+.emblem { width: 54px; height: 54px; object-fit: contain; }
+
+/* ---------- Section bars ---------- */
+.part-bar {
+  background: var(--navy); color: #fff; font-weight: 700; font-size: 13px;
+  padding: 6px 12px; border-radius: 4px; margin: 14px 0 10px;
+}
+.part-bar.alt { background: var(--navy-dark); }
+.part-bar.pagebreak {}
+
+/* ---------- Blocks ---------- */
+.block { margin-bottom: 12px; }
+.sub-head {
+  font-weight: 700; font-size: 12.5px; color: var(--navy);
+  border-left: 3px solid var(--navy); padding-left: 8px; margin: 10px 0 8px;
+}
+.sub-head.tight { margin-top: 6px; }
+.note { font-size: 11px; color: var(--muted); margin: 4px 0; line-height: 1.4; }
+
+.grid1 { display: grid; grid-template-columns: 1fr; gap: 8px 14px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 14px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 14px; }
+.span2 { grid-column: span 2; }
+.span3 { grid-column: span 3; }
+
+.field { display: flex; flex-direction: column; gap: 3px; }
+.field > span { font-size: 11px; color: var(--muted); font-weight: 600; }
+.field i { color: var(--invalid); font-style: normal; }
+
+/* ---------- Inputs ---------- */
+.cell {
+  width: 100%; height: 30px; border: 1px solid var(--line); border-radius: 6px;
+  padding: 2px 8px; font-size: 13px; font-family: inherit; color: var(--ink);
+  background: #fff; outline: none;
+}
+textarea.cell { height: auto; min-height: 48px; resize: vertical; padding: 6px 8px; }
+.cell:focus { border-color: var(--navy); box-shadow: 0 0 0 2px rgba(13, 59, 102, 0.15); }
+.cell.pan, .cell.upper { text-transform: uppercase; letter-spacing: 1px; }
+.cell.num { text-align: right; }
+.cell.readonly, .cell[readonly] { background: #f1f4f9; color: #38465e; }
+.cell.inline { display: inline-block; width: auto; min-width: 150px; height: 24px; margin: 0 2px; vertical-align: baseline; }
+.cell.invalid { border-color: var(--invalid); background: #fdecee; }
+select.cell {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 13px, calc(100% - 11px) 13px;
+  background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 26px;
+}
+
+/* ---------- Checkbox / radio rows ---------- */
+.opt-row { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; padding: 2px 0; }
+.opt { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; }
+.opt input { width: 16px; height: 16px; }
+
+/* ---------- Tables ---------- */
+.tbl { width: 100%; border-collapse: collapse; margin-bottom: 6px; }
+.tbl th, .tbl td { border: 1px solid var(--line); padding: 0; }
+.tbl th { background: #eef2f8; font-size: 10.5px; font-weight: 700; color: var(--navy); padding: 5px 6px; text-align: left; line-height: 1.2; }
+.tbl td.sl, .tbl td.ralign { padding: 4px 8px; }
+.tbl td.sl { text-align: center; font-weight: 600; color: var(--muted); }
+.tbl td.ralign { text-align: right; font-weight: 600; font-size: 11.5px; }
+.cell.flush { height: 28px; border: none; border-radius: 0; }
+.cell.flush:focus { box-shadow: inset 0 0 0 2px rgba(13, 59, 102, 0.25); }
+.tbl tfoot td { background: #f6f8fc; }
+
+/* ---------- Declaration / signatures ---------- */
+.declaration p { font-size: 12px; line-height: 1.55; margin: 4px 0 10px; }
+.sign-grid { display: grid; grid-template-columns: 1fr 1fr 1.4fr; gap: 14px; align-items: end; }
+.sign-cell { text-align: center; }
+.sign-line { border-top: 1px solid var(--ink); margin: 26px 6px 4px; }
+.sign-cell span { font-size: 11px; color: var(--muted); }
+
+/* ---------- Acknowledgement ---------- */
+.ack { margin-top: 12px; border: 1px dashed var(--navy); border-radius: 6px; padding: 10px 12px; }
+.ack-title { font-weight: 700; color: var(--navy); font-size: 12.5px; margin-bottom: 6px; text-align: center; }
+
+/* ---------- Preview banner + toast ---------- */
+.preview-banner {
+  position: fixed; top: 64px; left: 50%; transform: translateX(-50%); z-index: 60;
+  padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; color: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.preview-banner.fit { background: var(--green); }
+.preview-banner.over { background: var(--invalid); }
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #1b2433; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 13.5px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s; z-index: 100;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- Floating Validate button ---------- */
+.fab {
+  position: fixed; right: 22px; bottom: 22px; z-index: 90;
+  display: inline-flex; align-items: center; gap: 8px;
+  border: none; border-radius: 30px; padding: 13px 20px;
+  background: linear-gradient(135deg, var(--green), #155a24); color: #fff;
+  font-size: 14px; font-weight: 700; font-family: inherit; cursor: pointer;
+  box-shadow: 0 8px 22px rgba(8, 42, 77, 0.4);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.fab:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(8, 42, 77, 0.5); }
+.fab:active { transform: translateY(0); }
+.fab .fab-ic { font-size: 16px; line-height: 1; }
+@media (max-width: 480px) {
+  .fab { padding: 15px; border-radius: 50%; }
+  .fab .fab-tx { display: none; }
+}
+
+/* ---------- On-screen preview framing ---------- */
+body.preview-mode { background: #3a3f44; }
+body.preview-mode .page { width: 210mm; max-width: none; margin: 84px auto 48px; }
+
+/* ---------- Print ---------- */
+@media print {
+  @page { size: A4 portrait; margin: 10mm; }
+  html, body { background: #fff; }
+  .no-print { display: none !important; }
+  .page { max-width: none; width: auto; margin: 0; box-shadow: none; }
+  .doc { border-width: 1.5px; padding: 8px 10px; }
+  body { font-size: 10.5px; }
+  .cell { height: 22px; font-size: 10.5px; }
+  .cell.inline { height: 18px; }
+  .cell.flush { height: 20px; }
+  textarea.cell { min-height: 38px; }
+  .head-center h1 { font-size: 13px; }
+  .part-bar, .sub-head, .field span, .tbl th, .emblem { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .part-bar.pagebreak { page-break-before: always; }
+  .block, .tbl, .declaration, .sign-grid, .ack { page-break-inside: avoid; }
+  .cell:focus { box-shadow: none !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .doc-head { grid-template-columns: 1fr; text-align: left; }
+  .grid2, .grid3, .sign-grid { grid-template-columns: 1fr; }
+  .span2, .span3 { grid-column: span 1; }
+}
+  </style>
+</head>
+<body>
+  <div class="toolbar no-print">
+    <a class="btn btn-ghost" href="index.html">&larr; Portal</a>
+    <span class="tb-title">APY — Subscriber Details Modification</span>
+    <span class="tb-spacer"></span>
+    <button type="button" id="btnSample" class="btn btn-ghost">Fill Sample</button>
+    <button type="button" id="btnClear" class="btn btn-ghost">Clear</button>
+    <button type="button" id="btnExport" class="btn btn-ghost">Export CSV</button>
+    <label class="btn btn-ghost" for="importCsv">Import CSV</label>
+    <input id="importCsv" type="file" accept=".csv,text/csv" hidden />
+    <button type="button" id="btnPreview" class="btn btn-ghost">Preview</button>
+    <button type="button" id="btnPrint" class="btn btn-primary">Print / PDF</button>
+  </div>
+
+  <div id="previewBanner" class="preview-banner no-print" hidden></div>
+
+  <div class="page">
+    <form id="docForm" class="doc" novalidate>
+      <header class="doc-head simple">
+        <div class="head-center">
+          <h1>Atal Pension Yojana (APY)</h1>
+          <p>Subscriber Details Modification &amp; Change of APY-SP Form</p>
+        </div>
+      </header>
+
+      <section class="block">
+        <div class="grid2">
+          <label class="field"><span>PRAN <i>*</i></span><input type="text" id="pran" class="cell" maxlength="12" required /></label>
+          <label class="field"><span>Name of subscriber <i>*</i></span><input type="text" id="name" class="cell upper" required /></label>
+        </div>
+        <p class="note">PRAN is mandatory. Fill only the field(s) which are to be modified. Tick the section(s) you wish to change below.</p>
+        <div class="opt-row">
+          <label class="opt"><input type="checkbox" id="chgA" /> A) Personal details</label>
+          <label class="opt"><input type="checkbox" id="chgB" /> B) Bank details</label>
+          <label class="opt"><input type="checkbox" id="chgC" /> C) Nomination details</label>
+          <label class="opt"><input type="checkbox" id="chgD" /> D) Frequency of contribution</label>
+          <label class="opt"><input type="checkbox" id="chgE" /> E) Date of birth</label>
+          <label class="opt"><input type="checkbox" id="chgF" /> F) Pension upgrade</label>
+          <label class="opt"><input type="checkbox" id="chgG" /> G) Pension downgrade</label>
+          <label class="opt"><input type="checkbox" id="chgH" /> H) Re-issue of ePRAN / e-SoT</label>
+        </div>
+      </section>
+
+      <div class="part-bar">Section A &mdash; Change / Correction in Personal Details</div>
+      <section class="block">
+        <div class="grid2">
+          <label class="field"><span>Revised name</span><input type="text" id="aName" class="cell upper" /></label>
+          <label class="field"><span>Revised mobile number</span><input type="tel" id="aMobile" class="cell" maxlength="10" /></label>
+          <label class="field"><span>Revised email ID</span><input type="email" id="aEmail" class="cell" /></label>
+          <label class="field"><span>Aadhaar</span><input type="text" id="aAadhaar" class="cell" maxlength="12" /></label>
+        </div>
+        <label class="field"><span>Revised address</span><textarea id="aAddress" class="cell"></textarea></label>
+      </section>
+
+      <div class="part-bar alt">Section B &mdash; Change / Correction in Bank Details</div>
+      <section class="block">
+        <div class="grid2">
+          <label class="field"><span>Bank account number</span><input type="text" id="bAccount" class="cell" /></label>
+          <label class="field"><span>IFSC code</span><input type="text" id="bIfsc" class="cell upper" maxlength="11" /></label>
+          <label class="field span2"><span>Bank name &amp; branch</span><input type="text" id="bBank" class="cell" /></label>
+        </div>
+      </section>
+
+      <div class="part-bar">Section C &mdash; Change / Correction in Nomination Details</div>
+      <section class="block">
+        <div class="grid3">
+          <label class="field"><span>Nominee name</span><input type="text" id="cNomName" class="cell upper" /></label>
+          <label class="field"><span>Relationship</span>
+            <select id="cNomRel" class="cell"><option value="">Select</option><option>Spouse</option><option>Son</option><option>Daughter</option><option>Father</option><option>Mother</option><option>Other</option></select>
+          </label>
+          <label class="field"><span>Nominee Aadhaar</span><input type="text" id="cNomAadhaar" class="cell" maxlength="12" /></label>
+          <label class="field"><span>Nominee DOB (if minor)</span><input type="date" id="cNomDob" class="cell" /></label>
+          <label class="field span2"><span>Guardian's name (if minor)</span><input type="text" id="cGuardian" class="cell upper" /></label>
+        </div>
+      </section>
+
+      <div class="part-bar alt">Section D &mdash; Change / Correction in Frequency</div>
+      <section class="block">
+        <div class="opt-row">
+          <span style="font-weight:600;font-size:12px;">Update frequency to:</span>
+          <label class="opt"><input type="radio" name="dFreq" value="Monthly" /> Monthly</label>
+          <label class="opt"><input type="radio" name="dFreq" value="Quarterly" /> Quarterly</label>
+          <label class="opt"><input type="radio" name="dFreq" value="Half Yearly" /> Half Yearly</label>
+        </div>
+      </section>
+
+      <div class="part-bar">Section E &mdash; Change / Correction in Date of Birth</div>
+      <section class="block">
+        <label class="field"><span>Correct date of birth (supported by documentary proof)</span><input type="date" id="eDob" class="cell" style="max-width:220px;" /></label>
+      </section>
+
+      <div class="part-bar alt">Sections F &amp; G &mdash; Pension Amount Upgrade / Downgrade</div>
+      <section class="block">
+        <div class="opt-row">
+          <span style="font-weight:600;font-size:12px;">F) Upgrade to:</span>
+          <label class="opt"><input type="radio" name="fUpgrade" value="2000" /> 2000</label>
+          <label class="opt"><input type="radio" name="fUpgrade" value="3000" /> 3000</label>
+          <label class="opt"><input type="radio" name="fUpgrade" value="4000" /> 4000</label>
+          <label class="opt"><input type="radio" name="fUpgrade" value="5000" /> 5000</label>
+        </div>
+        <div class="opt-row">
+          <span style="font-weight:600;font-size:12px;">Upgrade mode:</span>
+          <label class="opt"><input type="radio" name="fMode" value="Existing mode (pay shortfall)" /> Existing mode (pay shortfall)</label>
+          <label class="opt"><input type="radio" name="fMode" value="Re-fixation (based on current age)" /> Re-fixation (current age)</label>
+        </div>
+        <div class="opt-row">
+          <span style="font-weight:600;font-size:12px;">G) Downgrade to:</span>
+          <label class="opt"><input type="radio" name="gDowngrade" value="1000" /> 1000</label>
+          <label class="opt"><input type="radio" name="gDowngrade" value="2000" /> 2000</label>
+          <label class="opt"><input type="radio" name="gDowngrade" value="3000" /> 3000</label>
+          <label class="opt"><input type="radio" name="gDowngrade" value="4000" /> 4000</label>
+        </div>
+      </section>
+
+      <div class="part-bar">Pension Details (as currently registered under APY)</div>
+      <section class="block">
+        <div class="grid2">
+          <label class="field"><span>Current pension amount (&#8377;)</span>
+            <select id="curPension" class="cell"><option value="">Select</option><option>1000</option><option>2000</option><option>3000</option><option>4000</option><option>5000</option></select>
+          </label>
+          <label class="field"><span>Current frequency</span>
+            <select id="curFreq" class="cell"><option value="">Select</option><option>Monthly</option><option>Quarterly</option><option>Half Yearly</option></select>
+          </label>
+        </div>
+        <p class="note">Frequency and pension amount can be changed once per financial year. Date of birth can be corrected a maximum of two times in the lifetime of the PRAN. Pension upgrade/downgrade attracts a fee of &#8377;50 (&#8377;25 to the bank upfront and &#8377;25 deducted from the APY account by CRA).</p>
+      </section>
+
+      <section class="block declaration">
+        <div class="sub-head">Declaration</div>
+        <p>I hereby authorize the bank to debit my bank account for making payment under APY as applicable based on the modification requested. If the transaction is delayed or not effected for insufficient balance, I will not hold the bank responsible. Any shortfall arising from the change will be paid by me; any excess will be credited back to my savings account by Protean-CRA. The particulars given above are true and correct.</p>
+        <div class="sign-grid">
+          <label class="field"><span>Date</span><input type="date" id="date" class="cell" /></label>
+          <label class="field"><span>Place</span><input type="text" id="place" class="cell" /></label>
+          <div class="sign-cell"><div class="sign-line"></div><span>Signature / Thumb impression of subscriber</span></div>
+        </div>
+      </section>
+
+      <div class="ack">
+        <div class="ack-title">FOR APY-SP (BANK) USE</div>
+        <p class="note">Modification request received from
+          <input type="text" class="cell inline" data-mirror="name" readonly />,
+          PRAN <input type="text" class="cell inline" data-mirror="pran" readonly />.</p>
+        <div class="grid3">
+          <label class="field"><span>Acknowledgement no.</span><input type="text" id="ackNo" class="cell" /></label>
+          <label class="field"><span>Date of receipt</span><input type="date" id="ackDate" class="cell" /></label>
+          <div class="sign-cell"><div class="sign-line"></div><span>Stamp &amp; Signature of the Bank</span></div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="toast" class="toast no-print" aria-live="polite"></div>
+  <script>
+    window.FORM_KEY = "apy.modification.v1";
+    window.FORM_NAME = "apy-modification";
+    window.FORM_SAMPLE = {
+      pran: "110076500012", name: "BISHAN SINGH",
+      chgF: "1", chgD: "1",
+      dFreq: "Quarterly",
+      fUpgrade: "5000", fMode: "Re-fixation (based on current age)",
+      curPension: "3000", curFreq: "Monthly",
+      date: new Date().toISOString().slice(0, 10), place: "Imphal"
+    };
+  </script>
+  <script>
+(function () {
+  "use strict";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("docForm");
+  if (!form) return;
+
+  var STORE_KEY = window.FORM_KEY || ("form." + location.pathname);
+  var SAMPLE = window.FORM_SAMPLE || null;
+
+  var toastEl = $("toast");
+  var toastTimer = null;
+  function toast(msg) {
+    if (!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+  }
+
+  function controls() {
+    return Array.prototype.slice
+      .call(form.querySelectorAll("input, select, textarea"))
+      .filter(function (el) { return el.id && el.type !== "file"; });
+  }
+
+  function getVal(el) {
+    if (el.type === "checkbox") return el.checked ? "1" : "";
+    if (el.type === "radio") {
+      var picked = form.querySelector('input[name="' + el.name + '"]:checked');
+      return picked ? picked.value : "";
+    }
+    return el.value;
+  }
+  function setVal(el, v) {
+    if (el.type === "checkbox") { el.checked = v === "1" || v === true || v === "true"; return; }
+    if (el.type === "radio") { el.checked = (el.value === v); return; }
+    el.value = v == null ? "" : v;
+  }
+
+  function collect() {
+    var data = {};
+    controls().forEach(function (el) {
+      if (el.type === "radio") { if (el.checked) data[el.name] = el.value; }
+      else data[el.id] = getVal(el);
+    });
+    return data;
+  }
+  function apply(data) {
+    if (!data) return;
+    controls().forEach(function (el) {
+      if (el.type === "radio") { if (data[el.name] != null) el.checked = (el.value === data[el.name]); }
+      else if (data[el.id] != null) setVal(el, data[el.id]);
+    });
+    mirror();
+  }
+
+  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(collect())); } catch (e) {} }
+  function load() {
+    try { var raw = localStorage.getItem(STORE_KEY); if (raw) apply(JSON.parse(raw)); } catch (e) {}
+  }
+
+  var mirrors = Array.prototype.slice.call(document.querySelectorAll("[data-mirror]"));
+  function mirror() {
+    mirrors.forEach(function (m) {
+      var src = $(m.getAttribute("data-mirror"));
+      if (!src) return;
+      var v = getVal(src);
+      if ("value" in m) m.value = v; else m.textContent = v;
+    });
+  }
+
+  function isPan(v) { return /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(String(v || "").toUpperCase()); }
+  function clearInvalid() {
+    form.querySelectorAll(".invalid").forEach(function (el) { el.classList.remove("invalid"); });
+  }
+  function labelFor(el) {
+    var f = el.closest(".field");
+    var sp = f && f.querySelector("span");
+    var t = sp ? sp.textContent : el.id;
+    return String(t || el.id).replace(/\*/g, "").trim();
+  }
+  function formatError(el) {
+    var v = String(getVal(el) || "").trim();
+    if (!v) return null;
+    var id = (el.id || "").toLowerCase();
+    var name = (el.name || "").toLowerCase();
+    if (el.classList.contains("pan")) return isPan(v) ? null : "enter a valid PAN (e.g. ABCDE1234F)";
+    if (el.type === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? null : "enter a valid email address";
+    if (id.indexOf("ifsc") > -1) return /^[A-Z]{4}0[A-Z0-9]{6}$/.test(v.toUpperCase()) ? null : "enter a valid IFSC (e.g. SBIN0001234)";
+    if (id.indexOf("aadhaar") > -1) return /^\d{12}$/.test(v) ? null : "Aadhaar must be 12 digits";
+    if (id.indexOf("pran") > -1) return /^\d{12}$/.test(v) ? null : "PRAN must be 12 digits";
+    if (el.type === "tel" || id.indexOf("mobile") > -1 || name.indexOf("mobile") > -1) return /^[6-9]\d{9}$/.test(v) ? null : "mobile must be 10 digits starting 6\u20139";
+    if (id === "pin" || id.indexOf("pincode") > -1) return /^\d{6}$/.test(v) ? null : "PIN code must be 6 digits";
+    if (el.type === "date") {
+      var d = new Date(v);
+      if (isNaN(d.getTime())) return "enter a valid date";
+      if (id.indexOf("dob") > -1) {
+        var today = new Date(); today.setHours(0, 0, 0, 0);
+        if (d > today) return "date of birth cannot be in the future";
+      }
+    }
+    return null;
+  }
+  function runValidation() {
+    clearInvalid();
+    var firstBad = null, issues = [];
+    controls().forEach(function (el) {
+      var v = String(getVal(el)).trim();
+      if (el.required && !v) {
+        el.classList.add("invalid");
+        if (!firstBad) firstBad = el;
+        issues.push(labelFor(el) + ": required");
+        return;
+      }
+      var fe = formatError(el);
+      if (fe) {
+        el.classList.add("invalid");
+        if (!firstBad) firstBad = el;
+        issues.push(labelFor(el) + ": " + fe);
+      }
+    });
+    return { ok: !firstBad, firstBad: firstBad, issues: issues };
+  }
+  function focusBad(r) {
+    if (!r.firstBad) return;
+    r.firstBad.scrollIntoView({ behavior: "smooth", block: "center" });
+    try { r.firstBad.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function validate() {
+    var r = runValidation();
+    if (!r.ok) {
+      focusBad(r);
+      toast(r.issues.length + " issue(s) \u2014 " + r.issues[0]);
+    }
+    return r.ok;
+  }
+  function validateOnly() {
+    var r = runValidation();
+    if (r.ok) {
+      toast("\u2713 All entries look valid.");
+    } else {
+      focusBad(r);
+      toast("\u26A0 " + r.issues.length + " issue(s) \u2014 fix highlighted fields. First: " + r.issues[0]);
+    }
+  }
+
+  function fillSample() {
+    if (!SAMPLE) { toast("No sample data for this form."); return; }
+    apply(SAMPLE);
+    save();
+    toast("Sample data filled.");
+  }
+  function clearAll() {
+    if (!confirm("Clear all fields? This cannot be undone.")) return;
+    controls().forEach(function (el) {
+      if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+      else el.value = "";
+    });
+    clearInvalid();
+    mirror();
+    save();
+    toast("Form cleared.");
+  }
+
+  function csvEscape(v) {
+    v = String(v == null ? "" : v);
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  }
+  function exportCSV() {
+    var data = collect();
+    var rows = [["field", "value"]];
+    Object.keys(data).forEach(function (k) { rows.push([k, data[k]]); });
+    var csv = rows.map(function (r) { return r.map(csvEscape).join(","); }).join("\r\n");
+    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = (window.FORM_NAME || "form") + ".csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast("CSV exported.");
+  }
+  function parseCSV(text) {
+    var rows = [], row = [], cur = "", q = false;
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += c;
+      } else {
+        if (c === '"') q = true;
+        else if (c === ",") { row.push(cur); cur = ""; }
+        else if (c === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
+        else if (c !== "\r") cur += c;
+      }
+    }
+    if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+    return rows;
+  }
+  function importCSV(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var rows = parseCSV(String(reader.result));
+        var data = {};
+        rows.slice(1).forEach(function (r) { if (r[0]) data[r[0]] = r[1] != null ? r[1] : ""; });
+        apply(data);
+        save();
+        toast("CSV imported.");
+      } catch (e) { toast("Could not read CSV file."); }
+    };
+    reader.readAsText(file);
+  }
+
+  function measureFit() {
+    var MM = 3.7795275591;
+    var doc = document.querySelector(".doc");
+    var docMM = (doc ? doc.getBoundingClientRect().height : 0) / MM;
+    var pages = document.querySelectorAll(".part-bar.pagebreak").length + 1;
+    var availMM = (297 - 20) * pages;
+    var banner = $("previewBanner");
+    if (!banner) return;
+    banner.hidden = false;
+    if (docMM > availMM + 1) {
+      banner.className = "preview-banner no-print over";
+      banner.textContent = "\u26A0 Content is long (~" + Math.round(docMM) + "mm) \u2014 it may exceed " + pages + " page(s).";
+    } else {
+      banner.className = "preview-banner no-print fit";
+      banner.textContent = "\u2713 Print layout ready (\u2248 " + pages + " A4 page" + (pages > 1 ? "s" : "") + ").";
+    }
+  }
+  function setPreview(on) {
+    document.body.classList.toggle("preview-mode", on);
+    var btn = $("btnPreview");
+    if (btn) btn.textContent = on ? "Exit Preview" : "Preview";
+    if (on) requestAnimationFrame(measureFit);
+    else { var b = $("previewBanner"); if (b) b.hidden = true; }
+  }
+
+  function onInput(e) {
+    var t = e.target;
+    if (t && t.classList && t.classList.contains("invalid")) t.classList.remove("invalid");
+    mirror();
+    save();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    load();
+    mirror();
+    form.addEventListener("input", onInput);
+    form.addEventListener("change", onInput);
+
+    var bind = function (id, fn, evt) { var el = $(id); if (el) el.addEventListener(evt || "click", fn); };
+    bind("btnSample", fillSample);
+    bind("btnClear", clearAll);
+    bind("btnExport", exportCSV);
+    bind("importCsv", function (e) {
+      if (e.target.files && e.target.files[0]) importCSV(e.target.files[0]);
+      e.target.value = "";
+    }, "change");
+    bind("btnPreview", function () { setPreview(!document.body.classList.contains("preview-mode")); });
+    bind("btnPrint", function () { if (validate()) window.print(); });
+
+    if (!$("fabValidate")) {
+      var fab = document.createElement("button");
+      fab.type = "button";
+      fab.id = "fabValidate";
+      fab.className = "fab no-print";
+      fab.title = "Validate the details you entered";
+      fab.innerHTML = '<span class="fab-ic">\u2713</span><span class="fab-tx">Validate</span>';
+      fab.addEventListener("click", validateOnly);
+      document.body.appendChild(fab);
+    }
+  });
+})();
+  </script>
+</body>
+</html>

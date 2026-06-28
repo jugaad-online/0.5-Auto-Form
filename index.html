@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>0.5 Auto Fill Form</title>
+  <link rel="stylesheet" href="portal.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">AF</div>
+        <div class="brand-text">
+          <h1>0.5 Auto Fill Form</h1>
+          <p>Government social-security scheme enrolment &amp; service forms</p>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <input id="search" type="search" placeholder="Search a scheme (e.g. APY, Sukanya)…" aria-label="Search schemes" />
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Choose a scheme to begin</h2>
+      <p>Select a scheme, then pick an action — registration, enrolment, withdrawal or claim. <strong>Fill the form on screen, print it, then sign and complete it by hand.</strong></p>
+    </section>
+
+    <section class="steps" aria-label="How it works">
+      <div class="step">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <h4>Fill on screen</h4>
+          <p>Open a form and type your details. Repeated fields auto-fill as you go.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <h4>Print / Save PDF</h4>
+          <p>Check the mandatory fields, then print to paper or save as PDF (fits one A4 page).</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <h4>Sign by hand</h4>
+          <p>Sign, attach documents and submit the printed form at your branch.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" id="grid" aria-label="Available schemes">
+
+      <article class="card" data-keywords="apy atal pension yojana retirement">
+        <div class="card-head">
+          <span class="badge badge-apy">APY</span>
+          <div class="card-title">
+            <h3>Atal Pension Yojana</h3>
+            <span class="card-sub">Guaranteed pension ₹1,000–₹5,000/month</span>
+          </div>
+        </div>
+        <p class="card-desc">Pension scheme for unorganised-sector workers aged 18–40. Contributions auto-debited until age 60.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="APY_REG.html">Fill Registration Form</a>
+          <a class="btn btn-ghost" href="APY_WDL.html">Fill Withdrawal Form</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.npscra.proteantech.in/nsdl/forms/APY_Subscriber_Registration_Form.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://www.npscra.proteantech.in/scheme-details.php" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="apy atal pension service modification change death spouse continuation claim nominee">
+        <div class="card-head">
+          <span class="badge badge-apy">APY</span>
+          <div class="card-title">
+            <h3>APY — Service &amp; Claims</h3>
+            <span class="card-sub">Modify details · death / spouse continuation</span>
+          </div>
+        </div>
+        <p class="card-desc">Update personal, bank, nomination, frequency or pension amount; or process account closure on death with spouse-continuation option.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="APY_MOD.html">Fill Modification Form</a>
+          <a class="btn btn-ghost" href="APY_DTH.html">Fill Death Claim Form</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.npscra.proteantech.in/nsdl/forms/Voluntary%20Exit_APY%20Withdrawal%20Form.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://www.npscra.proteantech.in/nsdl-forms.php" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="pmsby suraksha bima accident insurance">
+        <div class="card-head">
+          <span class="badge badge-pmsby">PMSBY</span>
+          <div class="card-title">
+            <h3>Pradhan Mantri Suraksha Bima Yojana</h3>
+            <span class="card-sub">Accident cover ₹2 lakh · ₹20/year</span>
+          </div>
+        </div>
+        <p class="card-desc">Accidental death &amp; disability insurance for account holders aged 18–70 with auto-debit consent.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="PMSBY_REG.html">Fill Enrolment Form</a>
+          <a class="btn btn-ghost" href="https://www.jansuraksha.gov.in/Files/PMSBY/ENGLISH/CLAIMFORM.pdf" target="_blank" rel="noopener">Claim</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.jansuraksha.gov.in/Files/PMSBY/ENGLISH/APPLICATIONFORM.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://www.jansuraksha.gov.in/" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="pmjjby jby jeevan jyoti life insurance">
+        <div class="card-head">
+          <span class="badge badge-pmjjby">PMJJBY</span>
+          <div class="card-title">
+            <h3>Pradhan Mantri Jeevan Jyoti Bima Yojana</h3>
+            <span class="card-sub">Life cover ₹2 lakh · ₹436/year</span>
+          </div>
+        </div>
+        <p class="card-desc">Life insurance for account holders aged 18–50, renewable annually up to age 55.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="PMJJBY_REG.html">Fill Enrolment Form</a>
+          <a class="btn btn-ghost" href="https://www.jansuraksha.gov.in/Files/PMJJBY/English/ClaimForm.pdf" target="_blank" rel="noopener">Claim</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.jansuraksha.gov.in/Files/PMJJBY/English/ApplicationForm.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://www.jansuraksha.gov.in/" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="ssy sukanya samriddhi girl child savings">
+        <div class="card-head">
+          <span class="badge badge-ssy">SSY</span>
+          <div class="card-title">
+            <h3>Sukanya Samriddhi Yojana</h3>
+            <span class="card-sub">Girl-child savings · high interest</span>
+          </div>
+        </div>
+        <p class="card-desc">Small-deposit scheme for a girl child below 10 years, with tax benefits and a 21-year maturity.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="SSY_REG.html">Fill Account Opening Form</a>
+          <a class="btn btn-ghost" href="http://www.nsiindia.gov.in/InternalPage.aspx?Id_Pk=89" target="_blank" rel="noopener">Withdraw</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="http://www.nsiindia.gov.in/writereaddata/FileUploads/FORM1.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="http://www.nsiindia.gov.in/InternalPage.aspx?Id_Pk=89" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="pmjdy jan dhan zero balance account">
+        <div class="card-head">
+          <span class="badge badge-pmjdy">PMJDY</span>
+          <div class="card-title">
+            <h3>Pradhan Mantri Jan-Dhan Yojana</h3>
+            <span class="card-sub">Zero-balance bank account</span>
+          </div>
+        </div>
+        <p class="card-desc">Financial-inclusion account with RuPay card, accident cover and overdraft facility.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="PMJDY_REG.html">Fill Account Opening Form</a>
+          <a class="btn btn-ghost" href="https://pmjdy.gov.in/scheme" target="_blank" rel="noopener">Benefits</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://pmjdy.gov.in/files/forms/account-opening/English.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://pmjdy.gov.in/scheme" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="form 121 tds 15g 15h nil tds declaration interest deposit">
+        <div class="card-head">
+          <span class="badge badge-f121">121</span>
+          <div class="card-title">
+            <h3>Form No. 121 (TDS)</h3>
+            <span class="card-sub">Nil-TDS self-declaration · replaces 15G/15H</span>
+          </div>
+        </div>
+        <p class="card-desc">Declaration to avoid TDS on interest, dividends and other income for residents with nil tax liability (FY 2026-27 onwards).</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="FORM121.html">Fill Declaration Form</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.incometaxindia.gov.in/documents/20117/16508534/form-no-121.pdf/6653e7c9-ddfe-e2ef-1909-4db87f103ee7" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://www.incometax.gov.in/iec/foportal/" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+      <article class="card" data-keywords="nps national pension system">
+        <div class="card-head">
+          <span class="badge badge-nps">NPS</span>
+          <div class="card-title">
+            <h3>National Pension System</h3>
+            <span class="card-sub">Market-linked retirement savings</span>
+          </div>
+        </div>
+        <p class="card-desc">Voluntary, long-term retirement investment account regulated by PFRDA.</p>
+        <div class="card-actions">
+          <a class="btn btn-primary" href="NPS_REG.html">Fill Registration Form</a>
+          <a class="btn btn-ghost" href="https://www.npscra.proteantech.in/forms.php" target="_blank" rel="noopener">Withdraw</a>
+        </div>
+        <div class="card-links">
+          <a class="card-link" href="https://www.npscra.proteantech.in/download/government-sector/central-government/forms/NPS-Subscriber%20Registration%20Form_CSRF-G.pdf" target="_blank" rel="noopener">Official PDF form</a>
+          <a class="card-link" href="https://www.npscra.proteantech.in/scheme-details.php" target="_blank" rel="noopener">Official page</a>
+        </div>
+      </article>
+
+    </section>
+
+    <p class="empty-state" id="emptyState" hidden>No schemes match your search.</p>
+  </main>
+
+  <footer class="foot">
+    <span>0.5 Auto Fill Form · Internal use</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="portal.js"></script>
+</body>
+</html>
