@@ -31,20 +31,21 @@ No build step, no dependencies, no internet connection required — everything r
 
 ## Forms included
 
-Each form is a **single self-contained HTML file** (HTML + CSS + JavaScript inlined). Open from the portal or directly.
+Each form is a **single self-contained HTML file** (HTML + CSS + JavaScript inlined). Click any **Open** link below to launch the form online on the live site.
 
-| Scheme | Action | File |
+| Scheme | Action | Open online |
 |---|---|---|
-| Atal Pension Yojana (APY) | Registration | [`APY_REG.html`](APY_REG.html) |
-| Atal Pension Yojana (APY) | Withdrawal / Voluntary exit | [`APY_WDL.html`](APY_WDL.html) |
-| Atal Pension Yojana (APY) | Subscriber detail modification | [`APY_MOD.html`](APY_MOD.html) |
-| Atal Pension Yojana (APY) | Death claim / spouse continuation | [`APY_DTH.html`](APY_DTH.html) |
-| Pradhan Mantri Suraksha Bima Yojana (PMSBY) | Enrolment | [`PMSBY_REG.html`](PMSBY_REG.html) |
-| Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY) | Enrolment | [`PMJJBY_REG.html`](PMJJBY_REG.html) |
-| Sukanya Samriddhi Yojana (SSY) | Account opening | [`SSY_REG.html`](SSY_REG.html) |
-| Pradhan Mantri Jan-Dhan Yojana (PMJDY) | Account opening | [`PMJDY_REG.html`](PMJDY_REG.html) |
-| National Pension System (NPS) | Registration (CSRF-1) | [`NPS_REG.html`](NPS_REG.html) |
-| Income Tax Form No. 121 | Nil-TDS self-declaration | [`FORM121.html`](FORM121.html) |
+| **Portal (home)** | All schemes | [Open `index.html`](https://jugaad-online.github.io/0.5-Auto-Form/) |
+| Atal Pension Yojana (APY) | Registration | [Open `APY_REG.html`](https://jugaad-online.github.io/0.5-Auto-Form/APY_REG.html) |
+| Atal Pension Yojana (APY) | Withdrawal / Voluntary exit | [Open `APY_WDL.html`](https://jugaad-online.github.io/0.5-Auto-Form/APY_WDL.html) |
+| Atal Pension Yojana (APY) | Subscriber detail modification | [Open `APY_MOD.html`](https://jugaad-online.github.io/0.5-Auto-Form/APY_MOD.html) |
+| Atal Pension Yojana (APY) | Death claim / spouse continuation | [Open `APY_DTH.html`](https://jugaad-online.github.io/0.5-Auto-Form/APY_DTH.html) |
+| Pradhan Mantri Suraksha Bima Yojana (PMSBY) | Enrolment | [Open `PMSBY_REG.html`](https://jugaad-online.github.io/0.5-Auto-Form/PMSBY_REG.html) |
+| Pradhan Mantri Jeevan Jyoti Bima Yojana (PMJJBY) | Enrolment | [Open `PMJJBY_REG.html`](https://jugaad-online.github.io/0.5-Auto-Form/PMJJBY_REG.html) |
+| Sukanya Samriddhi Yojana (SSY) | Account opening | [Open `SSY_REG.html`](https://jugaad-online.github.io/0.5-Auto-Form/SSY_REG.html) |
+| Pradhan Mantri Jan-Dhan Yojana (PMJDY) | Account opening | [Open `PMJDY_REG.html`](https://jugaad-online.github.io/0.5-Auto-Form/PMJDY_REG.html) |
+| National Pension System (NPS) | Registration (CSRF-1) | [Open `NPS_REG.html`](https://jugaad-online.github.io/0.5-Auto-Form/NPS_REG.html) |
+| Income Tax Form No. 121 | Nil-TDS self-declaration | [Open `FORM121.html`](https://jugaad-online.github.io/0.5-Auto-Form/FORM121.html) |
 
 ### File naming convention
 
